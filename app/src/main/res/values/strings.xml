@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">RUPizza</string>
+    <string name="welcome_to_ru_pizza">Welcome to RU Pizza!</string>
+    <string name="please_select_an_option">Please Select An Option</string>
+    <string name="specialty_pizzas">Specialty Pizzas</string>
+    <string name="specialty_pizzas_text">Specialty Pizzas</string>
+    <string name="build_your_own_text">Build Your Own</string>
+    <string name="shopping_cart_text">Shopping Cart</string>
+    <string name="store_orders_text">Store Orders</string>
+    <string name="custom_pizzas">Custom Pizzas</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="store_orders">Store Orders</string>
 </resources>
