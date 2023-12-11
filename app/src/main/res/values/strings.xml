@@ -10,4 +10,11 @@
     <string name="custom_pizzas">Custom Pizzas</string>
     <string name="shopping_cart">Shopping Cart</string>
     <string name="store_orders">Store Orders</string>
+    <string name="username">Username:</string>
+    <string name="deluxe_pizza">Deluxe Pizza</string>
+    <string name="select_any_of_the_pizza_images_below">Select Any of the Pizza Images Below</string>
+    <string name="small">small</string>
+    <string name="medium">medium</string>
+    <string name="large">large</string>
+    <string name="quantity">Quantity</string>
 </resources>
