@@ -79,7 +79,7 @@ public class SpecialtiesActivity extends AppCompatActivity {
         itemsList.add(new Item("pepperoni", PizzaMaker.createPizza("pepperoni").toppings));
     }
 
-    public void chooseSpecs(View view, int position) {
+    public void chooseSpecs(View  view, int position) {
        StringBuilder name = new StringBuilder();
         int image = chooseSpecialtyImage(position, name);
         Pizza pizza = PizzaMaker.createPizza(name.toString());

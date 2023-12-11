@@ -18,4 +18,10 @@
     <string name="large">large</string>
     <string name="quantity">Quantity</string>
     <string name="select_from_any_of_the_pizzas_below">Select From Any of the Pizzas Below</string>
+    <string name="remove_pizza">Remove Pizza</string>
+    <string name="place_order">Place Order</string>
+    <string name="sales_tax">Sales Tax:</string>
+    <string name="order_total">Order total:</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="ordernumber">OrderNumber:</string>
 </resources>
