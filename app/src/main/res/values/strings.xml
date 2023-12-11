@@ -17,4 +17,5 @@
     <string name="medium">medium</string>
     <string name="large">large</string>
     <string name="quantity">Quantity</string>
+    <string name="select_from_any_of_the_pizzas_below">Select From Any of the Pizzas Below</string>
 </resources>

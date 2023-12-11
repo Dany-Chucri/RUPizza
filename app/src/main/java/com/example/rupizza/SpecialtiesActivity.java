@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,9 +19,10 @@ import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class SpecialtiesActivity extends AppCompatActivity {
+    protected Order shoppingCart;
     private ArrayList<Item> itemsList;
     private RecyclerView recyclerView;
 
@@ -32,6 +34,10 @@ public class SpecialtiesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
+
         setContentView(R.layout.activity_specialties_view);
         recyclerView = findViewById(R.id.recyclerView);
         itemsList = new ArrayList<>();
@@ -83,7 +89,6 @@ public class SpecialtiesActivity extends AppCompatActivity {
         pizza.setExtraCheese(extraCheese.isChecked());
         pizza.setExtraSauce(extraSauce.isChecked());
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        NumberFormat.getCurrencyInstance().format(pizza.price());
         alert.setMessage("Total Cost: " + NumberFormat.getCurrencyInstance().format(pizza.price()) + "\nWould you like to add this pizza to your order?").setTitle("Pizza Creator");
         alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

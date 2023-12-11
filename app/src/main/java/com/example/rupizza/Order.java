@@ -1,5 +1,6 @@
 package com.example.rupizza;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * The Order object that represents a cart of pizzas.
  * @author Dany Chucri, Madhur Nutulapati
  */
-public class Order {
+public class Order implements Serializable {
     private int orderNumber;
     private ArrayList<Pizza> pizzas;
 

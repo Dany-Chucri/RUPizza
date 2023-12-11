@@ -3,6 +3,7 @@ package com.example.rupizza;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * It keeps track of orders, generates order numbers, and provides methods for managing and exporting orders.
  * @author Dany Chucri, Madhur Nutulapati
  */
-public class StoreOrders {
+public class StoreOrders implements Serializable {
     private int nextAvailableOrderNum;
     private List<Order> orders;
 
