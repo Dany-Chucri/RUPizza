@@ -47,9 +47,10 @@ public class SpecialtiesActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
-                    public void onItemClick(View v, int position) {
+                    public void onItemClick(View view, int position) {
 
-                        Toast.makeText(getApplicationContext(), "Hello" + position, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Hello" + position, Toast.LENGTH_SHORT).show();
+                        chooseSpecs(view, position);
                     }
                 })
         );
@@ -72,19 +73,26 @@ public class SpecialtiesActivity extends AppCompatActivity {
         itemsList.add(new Item("pepperoni", PizzaMaker.createPizza("pepperoni").toppings));
     }
 
-    public void chooseSpecs(View view) {
+    public void chooseSpecs(View view, int position) {
+       StringBuilder name = new StringBuilder();
+        int image = chooseSpecialtyImage(position, name);
+        Pizza pizza = PizzaMaker.createPizza(name.toString());
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        radioButton = findViewById(selectedId);
+        pizza.setSize(radioButton.getText().toString());
+        pizza.setExtraCheese(extraCheese.isChecked());
+        pizza.setExtraSauce(extraSauce.isChecked());
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        //NumberFormat.getCurrencyInstance().format(pizza.price());
-        double sampleCost = 100.00;
-        alert.setMessage("Total Cost: " + sampleCost + "\nWould you like to add this pizza to your order?").setTitle("Pizza Creator");
+        NumberFormat.getCurrencyInstance().format(pizza.price());
+        alert.setMessage("Total Cost: " + NumberFormat.getCurrencyInstance().format(pizza.price()) + "\nWould you like to add this pizza to your order?").setTitle("Pizza Creator");
         alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-                radioButton = (RadioButton) findViewById(selectedId);
-                Toast.makeText(getApplicationContext(), radioButton.getText(), Toast.LENGTH_SHORT).show();
+                //TODO
+                //Toast.makeText(getApplicationContext(), radioButton.getText(), Toast.LENGTH_SHORT).show();
             }
         }).setNegativeButton("no", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                //TODO
                 Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_LONG).show();
             }
         });
@@ -92,6 +100,27 @@ public class SpecialtiesActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private int chooseSpecialtyImage(int position, StringBuilder name) {
+        String image = itemsList.get(position).getImage();
+        switch (image) {
+            case "deluxe":
+                name.append("deluxe");
+                return 0;
+            case "supreme":
+                name.append("supreme");
+                return 1;
+            case "meatzza":
+                name.append("meatzza");
+                return 2;
+            case "seafood":
+                name.append("seafood");
+                return 3;
+            case "pepperoni":
+                name.append("pepperoni");
+                return 4;
+        }
+        return -1;
+    }
 
 //    private Pizza buildSpecialty(View view) {
 //        String selected = itemsList.get();

@@ -18,8 +18,8 @@
         android:contentDescription="@string/deluxe_pizza"
         android:contextClickable="true"
         android:cropToPadding="true"
+        android:focusable="true"
         android:longClickable="true"
-        android:onClick="chooseSpecs"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/deluxepizza"
-        android:focusable="true" />
+        app:srcCompat="@drawable/deluxepizza" />
 
     <ListView
         android:id="@+id/toppingsList"
