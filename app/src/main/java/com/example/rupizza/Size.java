@@ -1,10 +1,12 @@
 package com.example.rupizza;
 
+import java.io.Serializable;
+
 /**
  * The Size enum represents different sizes for pizza.
  * @author Dany Chucri, Madhur Nutulapati
  */
-public enum Size {
+public enum Size implements Serializable {
     /**
      * Represents a small-sized pizza.
      */

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class SpecialtiesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
+        System.out.println("On specialties onCreate: " + shoppingCart.getPizzas());
+
 
         setContentView(R.layout.activity_specialties_view);
         recyclerView = findViewById(R.id.recyclerView);
@@ -54,12 +57,22 @@ public class SpecialtiesActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-
                         //Toast.makeText(getApplicationContext(), "Hello" + position, Toast.LENGTH_SHORT).show();
                         chooseSpecs(view, position);
                     }
                 })
         );
+    }
+
+    private void sendResult() {
+        System.out.println("On sendResult: " + shoppingCart.getPizzas());
+
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Shopping Cart", shoppingCart);
+        intent.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
 
@@ -80,25 +93,31 @@ public class SpecialtiesActivity extends AppCompatActivity {
     }
 
     public void chooseSpecs(View  view, int position) {
-       StringBuilder name = new StringBuilder();
-        int image = chooseSpecialtyImage(position, name);
+        StringBuilder name = new StringBuilder();
+        chooseSpecialtyImage(position, name);
         Pizza pizza = PizzaMaker.createPizza(name.toString());
         int selectedId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(selectedId);
         pizza.setSize(radioButton.getText().toString());
         pizza.setExtraCheese(extraCheese.isChecked());
         pizza.setExtraSauce(extraSauce.isChecked());
+        double price = pizza.price() * Integer.parseInt(String.valueOf(quantity.getText()));
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage("Total Cost: " + NumberFormat.getCurrencyInstance().format(pizza.price()) + "\nWould you like to add this pizza to your order?").setTitle("Pizza Creator");
+        alert.setMessage("Total Cost: " + NumberFormat.getCurrencyInstance().format(price) + "\nWould you like to add this pizza to your order?").setTitle("Pizza Creator");
         alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                //TODO
-                //Toast.makeText(getApplicationContext(), radioButton.getText(), Toast.LENGTH_SHORT).show();
+                shoppingCart.addPizza(pizza);
+                for (int i = Integer.parseInt(String.valueOf(quantity.getText())); i > 1; i--) {
+                    Pizza pizzacopy = PizzaMaker.createPizza(pizza.getPizzaType());
+                    pizzacopy.copyPizza(pizza);
+                    shoppingCart.addPizza(pizzacopy);
+                }
+                Toast.makeText(getApplicationContext(), "Pizza has been added to cart", Toast.LENGTH_LONG).show();
+                sendResult();
             }
         }).setNegativeButton("no", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                //TODO
-                Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Pizza was not added to cart.", Toast.LENGTH_LONG).show();
             }
         });
         AlertDialog dialog = alert.create();
@@ -126,23 +145,4 @@ public class SpecialtiesActivity extends AppCompatActivity {
         }
         return -1;
     }
-
-//    private Pizza buildSpecialty(View view) {
-//        String selected = itemsList.get();
-//        setSpecialtyImage(selected);
-//        Pizza pizza = PizzaMaker.createPizza(selected);
-//        RadioButton selectedRadioButton = (RadioButton) specialtySize.getSelectedToggle();
-//        pizza.setSize(selectedRadioButton.getText());
-//        pizza.setExtraSauce(extraSauce.isSelected());
-//        pizza.setExtraCheese(extraCheese.isSelected());
-//
-//        totalPrice.clear();
-//        sauce.clear();
-//        toppings.setItems(FXCollections.observableList((List) pizza.toppings));
-//        NumberFormat.getCurrencyInstance().format(pizza.price());
-//        totalPrice.appendText(NumberFormat.getCurrencyInstance().format(pizza.price()));
-//        sauce.appendText(pizza.sauce.toString());
-//
-//        return pizza;
-//    }
 }
