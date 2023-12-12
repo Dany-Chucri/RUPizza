@@ -33,15 +33,14 @@ public class CustomsActivity extends AppCompatActivity {
     private EditText totalPrice;
     private CheckBox extraSauce, extraCheese;
     private RadioButton tomatoSauce, alfredoSauce;
-    private TextView selectedToppingsLabel;
+    private TextView selectedToppingsLabel,additionalToppingsLabel;
     private Button addTopping, removeTopping, addToOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
         setContentView(R.layout.activity_customs_view);
-        itemsList = new ArrayList<>();
+//        itemsList = new ArrayList<>();
         initializeUI();
         setupSpinner();
         setupSelectedToppingsListView();
@@ -54,20 +53,14 @@ public class CustomsActivity extends AppCompatActivity {
         extraCheese = findViewById(R.id.extraCheese);
         tomatoSauce = findViewById(R.id.tomatoSauce);
         alfredoSauce = findViewById(R.id.alfredoSauce);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
 
-//        sizeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.size_array));
-//        additionalToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.additional_toppings_array));
-        selectedToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-
+        sizeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.size_array));
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeChooser.setAdapter(sizeAdapter);
-    }
-    private void setSpecialtyPizzas() {
-        itemsList.add(new Item("deluxe", PizzaMaker.createPizza("deluxe").toppings));
-        itemsList.add(new Item("supreme", PizzaMaker.createPizza("supreme").toppings));
-        itemsList.add(new Item("meatzza", PizzaMaker.createPizza("meatzza").toppings));
-        itemsList.add(new Item("seafood", PizzaMaker.createPizza("seafood").toppings));
-        itemsList.add(new Item("pepperoni", PizzaMaker.createPizza("pepperoni").toppings));
+//        additionalToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.additional_toppings_array));
+        selectedToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
     }
 
     private void setupSpinner() {
@@ -84,7 +77,6 @@ public class CustomsActivity extends AppCompatActivity {
 
     private void selectSize() {
         String selectedSize = sizeChooser.getSelectedItem().toString();
-
         switch (selectedSize) {
             case "Small":
                 Toast.makeText(CustomsActivity.this, "Selected Small size", Toast.LENGTH_SHORT).show();
@@ -166,8 +158,6 @@ public class CustomsActivity extends AppCompatActivity {
     }
     public void selectAlfredo() {
         pizza.setSauce("alfredo");
-
-        // Assuming totalPrice is an EditText
         double updatedPrice = pizza.price();
         totalPrice.setText(NumberFormat.getCurrencyInstance().format(updatedPrice));
     }

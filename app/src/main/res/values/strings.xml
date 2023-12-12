@@ -27,5 +27,10 @@
     <string name="order_number">Order Number</string>
     <string name="select_size_prompt">Select Size</string>
     <string name="cancel_order">Cancel Order</string>
+    <string-array name="size_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
 
 </resources>
