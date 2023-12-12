@@ -30,15 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("request code is " + requestCode + "result code is " + resultCode);
-
+        //System.out.println("request code is " + requestCode + "result code is " + resultCode);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 Bundle bundle = data.getExtras();
                 assert bundle != null;
                 shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
-                System.out.println("On activity result: " + shoppingCart.getPizzas());
-
+                ///System.out.println("On activity result: " + shoppingCart.getPizzas());
             }
         }
     }
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable("Shopping Cart", shoppingCart);
         intent.putExtras(bundle);
-        System.out.println("On openSpecialties: " + shoppingCart.getPizzas());
+        //System.out.println("On openSpecialties: " + shoppingCart.getPizzas());
         startActivityForResult(intent, 1);
     }
 
@@ -66,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putSerializable("Shopping Cart", shoppingCart);
         bundle.putSerializable("Store Orders", storeOrders);
         intent.putExtras(bundle);
-        System.out.println("On openCart: " + shoppingCart.getPizzas());
-
+        //System.out.println("On openCart: " + shoppingCart.getPizzas());
         startActivity(intent);
     }
 

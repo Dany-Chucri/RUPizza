@@ -38,8 +38,7 @@ public class SpecialtiesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
-        System.out.println("On specialties onCreate: " + shoppingCart.getPizzas());
-
+        //System.out.println("On specialties onCreate: " + shoppingCart.getPizzas());
 
         setContentView(R.layout.activity_specialties_view);
         recyclerView = findViewById(R.id.recyclerView);
@@ -65,8 +64,7 @@ public class SpecialtiesActivity extends AppCompatActivity {
     }
 
     private void sendResult() {
-        System.out.println("On sendResult: " + shoppingCart.getPizzas());
-
+        //System.out.println("On sendResult: " + shoppingCart.getPizzas());
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("Shopping Cart", shoppingCart);
@@ -74,7 +72,6 @@ public class SpecialtiesActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
-
 
     private void setAdapter() {
         recyclerAdapter adapter = new recyclerAdapter(itemsList);
@@ -93,6 +90,7 @@ public class SpecialtiesActivity extends AppCompatActivity {
     }
 
     public void chooseSpecs(View  view, int position) {
+        if (checkErrors() != 0) return;
         StringBuilder name = new StringBuilder();
         chooseSpecialtyImage(position, name);
         Pizza pizza = PizzaMaker.createPizza(name.toString());
@@ -122,6 +120,32 @@ public class SpecialtiesActivity extends AppCompatActivity {
         });
         AlertDialog dialog = alert.create();
         dialog.show();
+    }
+
+    private int checkErrors() {
+        int error = 0;
+        if (radioGroup.getCheckedRadioButtonId() == -1) error = -1;
+        try{
+            if (Integer.parseInt(String.valueOf(quantity.getText())) <= 0) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Specialty Pizza Error");
+                alert.setMessage("Please enter a valid quantity.");
+                alert.setPositiveButton("OK", null);
+                alert.show();
+                error = -2;
+            }
+        }
+        catch(Exception e){
+            error = -1;
+        }
+        if (error == -1) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Specialty Pizza Error");
+            alert.setMessage("Could not select pizza.\nDo not leave size or quantity blank.");
+            alert.setPositiveButton("OK", null);
+            alert.show();
+        }
+        return error;
     }
 
     private int chooseSpecialtyImage(int position, StringBuilder name) {
