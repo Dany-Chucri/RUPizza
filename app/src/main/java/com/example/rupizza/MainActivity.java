@@ -37,9 +37,18 @@ public class MainActivity extends AppCompatActivity {
                 assert bundle != null;
                 if(bundle.getSerializable("Shopping Cart") != null) shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
                 if(bundle.getSerializable("Store Orders") != null) storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
+                if (shoppingCart.getOrderNumber() < storeOrders.getNextAvailableOrderNum()) clearCart();
                 //System.out.println("On activity result: " + storeOrders.getNextAvailableOrderNum());
             }
         }
+    }
+
+    private void clearCart(){
+        for (Pizza pizza : shoppingCart.getPizzas()) {
+            shoppingCart.removePizza(pizza);
+        }
+        shoppingCart.setOrderNumber(storeOrders.getNextAvailableOrderNum());
+        shoppingCart.setOrderPlaced(false);
     }
 
     public void openSpecialties (View view){

@@ -13,12 +13,23 @@ public class Order implements Serializable {
     private int orderNumber;
     private ArrayList<Pizza> pizzas;
 
+    public Boolean getOrderPlaced() {
+        return orderPlaced;
+    }
+
+    public void setOrderPlaced(Boolean orderPlaced) {
+        this.orderPlaced = orderPlaced;
+    }
+
+    private Boolean orderPlaced;
+
     /**
      * Instantiates an Order object.
      */
     public Order(){
         this.orderNumber = 1;
         pizzas = new ArrayList<Pizza>();
+        orderPlaced = false;
     }
 
     /**

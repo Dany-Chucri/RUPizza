@@ -1,8 +1,10 @@
 package com.example.rupizza;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class OrdersActivity extends AppCompatActivity {
@@ -39,72 +43,95 @@ public class OrdersActivity extends AppCompatActivity {
         storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
 
         ArrayList<String> arraySpinner= new ArrayList<String>();
-        int i = 1;
-        for (Order order : storeOrders.getOrders()) {
-            arraySpinner.add("" + i);
-            i++;
+        for (int i = 0; i < storeOrders.getOrders().size(); i++) {
+            arraySpinner.add("" + storeOrders.getOrders().get(i).getOrderNumber());
         }
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter2);
+        final int[] selectedPosition = {0};
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+
+        {
+            @Override
+            public void onItemSelected (AdapterView < ? > parent, View view,int position, long id){
+                selectedPosition[0] = position;
+                selectOrder();
+            }
+
+            @Override
+            public void onNothingSelected (AdapterView < ? > parent){
+            }
+        });
     }
 
     private void sendResult() {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("Store Orders", storeOrders);
-        //System.out.println("On send result: " + storeOrders.getNextAvailableOrderNum());
         intent.putExtras(bundle);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
-    public void selectOrder(View view){
-        String text = spinner.getSelectedItem().toString();
+    public void selectOrder(){
+        int i = Integer.parseInt(spinner.getSelectedItem().toString());
         ArrayList<Order> list = (ArrayList<Order>) storeOrders.getOrders();
         for (Order order : list){
-            if (order.getOrderNumber() == Integer.parseInt(text)) shoppingCart = order;
+            if (order.getOrderNumber() == i) {
+                shoppingCart = order;
+                break;
+            }
         }
         ArrayAdapter<Pizza> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shoppingCart.getPizzas());
         pizzaList.setAdapter(adapter);
+        updatePrices();
+    }
+
+    public void updatePrices() {
+        double total = 0;
+        for (Pizza pizza : shoppingCart.getPizzas()){
+            total += pizza.price();
+        }
+        double taxAmount = (total * Pizza.SALES_TAX) - total;
+        double totalPrice = total+ taxAmount;
+        orderTotal.setText(NumberFormat.getCurrencyInstance().format(totalPrice));
     }
 
     public void handleCancelOrder(View view) {
-        return;
-        /*try {
-            int selectedOrder = Integer.parseInt(orderNumber.getSelectionModel().getSelectedItem());
-            int comboNum = orderNumber.getSelectionModel().getSelectedIndex();
-            for (Order order : storeOrders.getOrders()) {
-                if (selectedOrder == order.getOrderNumber()) {
-                    storeOrders.cancelOrder(order);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("Are you sure you would like to cancel this order?").setTitle("Cancel Confirmation");
+        alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                cancelHelper();
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Order was not canceled.", Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+    }
+
+    private void cancelHelper() {
+        try {
+            int i = Integer.parseInt(spinner.getSelectedItem().toString());
+            Order toBeCanceled = null;
+            for (Order order : storeOrders.getOrders()){
+                if (order.getOrderNumber() == i)
+                {
+                    toBeCanceled = order;
+                    break;
                 }
             }
-
-            orderTotal.clear();
-            orderNumber.getItems().remove(comboNum);
-            pizzaList.getItems().clear();
-            if (!orderNumber.getSelectionModel().isEmpty()) {
-                selectedOrder = Integer.parseInt(orderNumber.getSelectionModel().getSelectedItem());
-                for (Order order : storeOrders.getOrders()) {
-                    if (selectedOrder == order.getOrderNumber()) {
-                        for (Pizza pizza : order.getPizzas()) {
-                            pizzaList.getItems().add(pizza.toString());
-                        }
-                    }
-                }
-            }
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Order Cancelled");
-            alert.setHeaderText("The selected order has been canceled.");
-            alert.showAndWait();
+            if (toBeCanceled != null) storeOrders.cancelOrder(toBeCanceled);
+            updatePrices();
+            Toast.makeText(getApplicationContext(), "Order was canceled.", Toast.LENGTH_LONG).show();
+            sendResult();
         }
         catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Cancellation Error");
-            alert.setHeaderText("Could not cancel selected order, if any.");
-            alert.setContentText("Please try again.");
-            alert.showAndWait();
-        }*/
+            Toast.makeText(getApplicationContext(), "Could not cancel order.", Toast.LENGTH_LONG).show();
+        }
     }
 }

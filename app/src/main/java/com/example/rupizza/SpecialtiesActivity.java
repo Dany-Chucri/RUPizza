@@ -40,6 +40,7 @@ public class SpecialtiesActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
         storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
+        if (shoppingCart.getOrderPlaced()) clearCart();
         //System.out.println("On specialties onCreate: " + shoppingCart.getPizzas());
 
         setContentView(R.layout.activity_specialties_view);
@@ -170,5 +171,13 @@ public class SpecialtiesActivity extends AppCompatActivity {
                 return 4;
         }
         return -1;
+    }
+
+    private void clearCart(){
+        for (Pizza pizza : shoppingCart.getPizzas()) {
+            shoppingCart.removePizza(pizza);
+        }
+        shoppingCart.setOrderNumber(storeOrders.getNextAvailableOrderNum());
+        shoppingCart.setOrderPlaced(false);
     }
 }

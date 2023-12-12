@@ -45,8 +45,6 @@ public class CartActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
         storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
-        if (shoppingCart.getOrderNumber() < storeOrders.getNextAvailableOrderNum()) clearCart();
-
         ArrayAdapter<Pizza> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shoppingCart.getPizzas());
         cartList.setAdapter(adapter);
         cartList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,6 +54,13 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         updatePrices();
+    }
+    protected void onStart() {
+        super.onStart();
+    }
+
+    protected void onResume() {
+        super.onResume();
     }
 
     private void sendResult() {
@@ -78,7 +83,7 @@ public class CartActivity extends AppCompatActivity {
 
     public void removePizza(Pizza pizza) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage("Are you sure you would like whichever pizza you last touched/clicked?").setTitle("Removal Confirmation");
+        alert.setMessage("Are you sure you would like to remove whichever pizza you last touched/clicked?").setTitle("Removal Confirmation");
         alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 shoppingCart.removePizza(pizza);
@@ -86,6 +91,7 @@ public class CartActivity extends AppCompatActivity {
                 cartList.setAdapter(adapter);
                 updatePrices();
                 Toast.makeText(getApplicationContext(), "Pizza was removed.", Toast.LENGTH_LONG).show();
+                sendRemovalResult();
             }
         }).setNegativeButton("no", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -94,6 +100,17 @@ public class CartActivity extends AppCompatActivity {
         });
         AlertDialog dialog = alert.create();
         dialog.show();
+    }
+
+    private void sendRemovalResult() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Shopping Cart", shoppingCart);
+        bundle.putSerializable("Store Orders", storeOrders);
+        intent.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+
     }
 
     public void updatePrices() {
@@ -126,6 +143,14 @@ public class CartActivity extends AppCompatActivity {
 
     public void handlePlaceOrder(View view) {
         try {
+            if (shoppingCart.getPizzas().size() < 1) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Purchase error");
+                alert.setMessage("Could not place an empty order.\nPlease buy our pizzas.");
+                alert.setPositiveButton("OK", null);
+                alert.show();
+                return;
+            }
             Order newOrder = new Order();
             newOrder.copyOrder(shoppingCart);
             addCartOrder(newOrder);
@@ -144,6 +169,7 @@ public class CartActivity extends AppCompatActivity {
         alert.setMessage("Would you like to place the order?").setTitle("Checkout Confirmation");
         alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                newOrder.setOrderPlaced(true);
                 storeOrders.addOrder(newOrder);
                 storeOrders.nextOrder();
                 shoppingCart.setOrderNumber(storeOrders.getNextAvailableOrderNum());
