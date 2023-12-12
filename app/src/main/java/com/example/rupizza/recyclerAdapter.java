@@ -48,17 +48,12 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
-        int[] images = new int[9];
-        images[0] = R.drawable.deluxepizza;
-        images[1] = R.drawable.supremepizza;
-        images[2] = R.drawable.meatzza;
-        images[3] = R.drawable.seafoodpizza;
-        images[4] = R.drawable.pepperonipizza;
-        images[5] = R.drawable.pepperonipizza;
-        images[6] = R.drawable.pepperonipizza;
-        images[7] = R.drawable.pepperonipizza;
-        images[8] = R.drawable.pepperonipizza;
-        images[9] = R.drawable.pepperonipizza;
+        int[] images = {
+                R.drawable.deluxepizza, R.drawable.supremepizza, R.drawable.meatzza,
+                R.drawable.seafoodpizza, R.drawable.pepperonipizza, R.drawable.cheeselovers,
+                R.drawable.grilledchickenpizza, R.drawable.chickenalfredopizza, R.drawable.hawaiianpizza,
+                R.drawable.custompizza
+        };
 
         StringBuilder name = new StringBuilder();
         int image = chooseSpecialtyImage(position, name);
