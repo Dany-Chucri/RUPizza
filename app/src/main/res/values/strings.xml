@@ -25,4 +25,5 @@
     <string name="subtotal">Subtotal:</string>
     <string name="ordernumber">OrderNumber:</string>
     <string name="order_number">Order Number</string>
+    <string name="select_size_prompt">Select Size</string>
 </resources>

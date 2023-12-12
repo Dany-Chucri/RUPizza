@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ControllerCustomPizzas">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/customPizzaImageView"
+        android:id="@+id/customPizzaImage"
         android:layout_width="260dp"
         android:layout_height="185dp"
         android:layout_marginStart="30dp"
@@ -16,62 +16,139 @@
     <Spinner
         android:id="@+id/sizeChooser"
         android:layout_width="171dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="295dp"
-        android:layout_marginTop="65dp"
-        android:prompt="@string/select_size" />
+        android:layout_height="50dp"
+        android:layout_below="@id/customPizzaImage"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:prompt="@string/select_size_prompt" />
 
     <ListView
         android:id="@+id/additionalToppings"
         android:layout_width="171dp"
         android:layout_height="163dp"
+        android:layout_below="@id/sizeChooser"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="290dp" />
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/additionalToppingsLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="135dp"
         android:layout_height="27dp"
+        android:layout_below="@id/additionalToppings"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="259dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/additional_toppings"
-        android:textSize="14sp" />
+        android:layout_marginTop="20dp"
+        android:text="Additional Toppings"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/priceLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="46dp"
         android:layout_height="20dp"
+        android:layout_below="@id/additionalToppingsLabel"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="511dp"
-        android:text="@string/price"
+        android:layout_marginTop="20dp"
+        android:text="Price"
         android:textSize="14sp" />
 
     <EditText
         android:id="@+id/totalPrice"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="509dp"
+        android:layout_below="@id/additionalToppingsLabel"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/priceLabel"
         android:editable="false" />
 
     <Button
         android:id="@+id/addToOrder"
         android:layout_width="171dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="509dp"
-        android:text="@string/add_to_order" />
+        android:layout_below="@id/totalPrice"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Add To Order" />
 
     <RadioButton
         android:id="@+id/tomatoSauce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrice"
         android:layout_marginStart="299dp"
         android:layout_marginTop="98dp"
         android:checked="true"
-        android:text="@string/tomato_sauce" />
+        android:text="Tomato Sauce" />
 
-    <!-- Add other radio buttons, checkboxes, and views as needed -->
+    <RadioButton
+        android:id="@+id/alfredoSauce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrice"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="125dp"
+        android:text="Alfredo Sauce" />
+
+    <CheckBox
+        android:id="@+id/extraSauce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrice"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="150dp"
+        android:text="Extra Sauce" />
+
+    <CheckBox
+        android:id="@+id/extraCheese"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrice"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="175dp"
+        android:text="Extra Cheese" />
+
+    <ListView
+        android:id="@+id/selectedToppings"
+        android:layout_width="171dp"
+        android:layout_height="163dp"
+        android:layout_below="@id/extraCheese"
+        android:layout_marginStart="329dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/selectedToppingsLabel"
+        android:layout_width="135dp"
+        android:layout_height="27dp"
+        android:layout_below="@id/selectedToppings"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="20dp"
+        android:text="Selected Toppings"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/addTopping"
+        android:layout_width="76dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/selectedToppings"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="20dp"
+        android:onClick="selectTopping"
+        android:text="Add Topping" />
+
+    <Button
+        android:id="@+id/removeTopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectedToppings"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/addTopping"
+        android:onClick="deselectTopping"
+        android:text="Remove Topping" />
 
 </RelativeLayout>
