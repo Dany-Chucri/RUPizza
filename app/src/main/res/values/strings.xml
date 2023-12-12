@@ -27,6 +27,18 @@
     <string name="order_number">Order Number</string>
     <string name="select_size_prompt">Select Size</string>
     <string name="cancel_order">Cancel Order</string>
+    <string name="additional_toppings">Additional Toppings</string>
+    <string name="total_price">Total price</string>
+    <string name="add_to_order">Add To Order</string>
+    <string name="tomato_sauce">Tomato Sauce</string>
+    <string name="alfredo_sauce">Alfredo Sauce</string>
+    <string name="extra_sauce">Extra Sauce</string>
+    <string name="extra_cheese">Extra Cheese</string>
+    <string name="add_topping">Add Topping</string>
+    <string name="remove_topping">Remove Topping</string>
+    <string name="selected_toppings">Selected Toppings</string>
+    <string name="price">Price</string>
+    <string name="custom_pizza">Custom Pizza</string>
     <string-array name="size_array">
         <item>Small</item>
         <item>Medium</item>
