@@ -25,6 +25,16 @@ public class PizzaMaker {
                 return new SeafoodPizza();
             case "pepperoni":
                 return new PepperoniPizza();
+            case "grilledchicken":
+                return new GrilledChickenPizza();
+            case "chickenalfredo":
+                return new ChickenAlfredoPizza();
+            case "gardenfresh":
+                return new GardenFreshPizza();
+            case "cheeselovers":
+                return new CheeseLoversPizza();
+            case "hawaiian":
+                return new HawaiianPizza();
             case "buildyourown":
                 return new BuildYourOwnPizza();
             default:

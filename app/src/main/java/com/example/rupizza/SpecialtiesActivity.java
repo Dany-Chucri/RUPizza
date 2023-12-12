@@ -90,6 +90,11 @@ public class SpecialtiesActivity extends AppCompatActivity {
         itemsList.add(new Item("meatzza", PizzaMaker.createPizza("meatzza").toppings));
         itemsList.add(new Item("seafood", PizzaMaker.createPizza("seafood").toppings));
         itemsList.add(new Item("pepperoni", PizzaMaker.createPizza("pepperoni").toppings));
+        itemsList.add(new Item("cheeselovers", PizzaMaker.createPizza("cheeselovers").toppings));
+        itemsList.add(new Item("grilledchicken", PizzaMaker.createPizza("grilledchicken").toppings));
+        itemsList.add(new Item("gardenfresh", PizzaMaker.createPizza("gardenfresh").toppings));
+        itemsList.add(new Item("chickenalfredo", PizzaMaker.createPizza("chickenalfredo").toppings));
+        itemsList.add(new Item("hawaiian", PizzaMaker.createPizza("hawaiian").toppings));
     }
 
     public void chooseSpecs(View  view, int position) {
@@ -169,6 +174,21 @@ public class SpecialtiesActivity extends AppCompatActivity {
             case "pepperoni":
                 name.append("pepperoni");
                 return 4;
+            case "cheeselovers":
+                name.append("cheeselovers");
+                return 5;
+            case "grilledchicken":
+                name.append("grilledchicken");
+                return 6;
+            case "chickenalfredo":
+                name.append("chickenalfredo");
+                return 7;
+            case "hawaiian":
+                name.append("hawaiian");
+                return 8;
+            case "gardenfresh":
+                name.append("gardenfresh");
+                return 9;
         }
         return -1;
     }

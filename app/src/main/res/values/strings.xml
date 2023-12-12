@@ -32,5 +32,10 @@
         <item>Medium</item>
         <item>Large</item>
     </string-array>
+    <array name="additional_toppings_array">
+        <item>Sausage</item>
+        <item>Chicken</item>
+        <item>Beef</item>
+    </array>
 
 </resources>

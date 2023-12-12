@@ -23,9 +23,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     private Context context;
     private ArrayList<Item> itemsList;
-
-
-
     public recyclerAdapter(ArrayList<Item> itemsList){
         this.itemsList = itemsList;
     }
@@ -57,6 +54,12 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         images[2] = R.drawable.meatzza;
         images[3] = R.drawable.seafoodpizza;
         images[4] = R.drawable.pepperonipizza;
+        images[5] = R.drawable.pepperonipizza;
+        images[6] = R.drawable.pepperonipizza;
+        images[7] = R.drawable.pepperonipizza;
+        images[8] = R.drawable.pepperonipizza;
+        images[9] = R.drawable.pepperonipizza;
+
         StringBuilder name = new StringBuilder();
         int image = chooseSpecialtyImage(position, name);
         Pizza pizza = PizzaMaker.createPizza(name.toString());
@@ -84,6 +87,21 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             case "pepperoni":
                 name.append("pepperoni");
                 return 4;
+            case "cheeselovers":
+                name.append("cheeselovers");
+                return 5;
+            case "grilledchicken":
+                name.append("grilledchicken");
+                return 6;
+            case "chickenalfredo":
+                name.append("chickenalfredo");
+                return 7;
+            case "hawaiian":
+                name.append("hawaiian");
+                return 8;
+            case "gardenfresh":
+                name.append("gardenfresh");
+                return 9;
         }
         return -1;
     }

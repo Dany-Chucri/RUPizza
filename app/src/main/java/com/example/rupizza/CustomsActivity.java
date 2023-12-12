@@ -59,7 +59,7 @@ public class CustomsActivity extends AppCompatActivity {
         sizeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.size_array));
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeChooser.setAdapter(sizeAdapter);
-//        additionalToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.additional_toppings_array));
+        additionalToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.additional_toppings_array));
         selectedToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
     }
 

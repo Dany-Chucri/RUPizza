@@ -62,17 +62,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/additionalToppingsLabel" />
 
+
     <EditText
         android:id="@+id/totalPrice"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="368dp"
         android:editable="false"
         android:hint="Total price"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/priceLabel" />
-
 
     <Button
         android:id="@+id/addToOrder"

@@ -18,10 +18,13 @@ public abstract class Pizza implements Serializable {
 
     protected static final double SALES_TAX = 1.06625;
     protected static final double PRICE_DELUXE=14.99;
-
     protected static final double PRICE_SUPREME=15.99;
     protected static final double PRICE_MEATZZA=16.99;
-
+    protected static final double PRICE_CHICKEN_ALFREDO=17.99;
+    protected static final double PRICE_GARDEN_FRESH=15.99;
+    protected static final double PRICE_HAWAIIAN=17.99;
+    protected static final double PRICE_CHEESELOVERS=13.99;
+    protected static final double PRICE_GRILLEDCHICKEN=17.99;
     protected static final double PRICE_SEAFOOD=17.99;
     protected static final double PRICE_PEPPERONI=10.99;
     protected static final double PRICE_BUILD_YOUR_OWN_PIZZA=8.99;
@@ -366,7 +369,171 @@ class PepperoniPizza extends Pizza {
         return base;
     }
 }
+/**
+ * CheeseLoversPizza class represents a pizza with cheesy toppings.
+ */
+class CheeseLoversPizza extends Pizza {
 
+    /**
+     * Default constructor for a CheeseLoversPizza object.
+     */
+    public CheeseLoversPizza() {
+        super();
+        pizzaType = "CheeseLovers";
+        sauce = Sauce.ALFREDO;
+    }
+
+    /**
+     * Calculate the price of the CheeseLoversPizza pizza based on its size and additional options.
+     *
+     * @return The total price of the CheeseLoversPizza pizza.
+     */
+    public double price() {
+        double base = PRICE_CHEESELOVERS;
+        if (this.extraSauce)
+            base += EXTRA_SAUCE_FEE;
+        if (this.extraCheese)
+            base += EXTRA_CHEESE_FEE;
+        if (this.size == Size.MEDIUM)
+            base += PRICE_FOR_MEDIUM;
+        if (this.size == Size.LARGE)
+            base += PRICE_FOR_LARGE;
+        return base;
+    }
+}
+/**
+ * HawaiianPizza class represents a pizza with hawaiian toppings.
+ */
+class HawaiianPizza extends Pizza {
+
+    /**
+     * Default constructor for a HawaiianPizza object.
+     */
+    public HawaiianPizza() {
+        super();
+        pizzaType = "Hawaiian";
+        toppings.add(Topping.PINEAPPLE);
+        toppings.add(Topping.HAM);
+    }
+
+    /**
+     * Calculate the price of the Hawaiian pizza based on its size and additional options.
+     *
+     * @return The total price of the hawaiian pizza.
+     */
+    public double price() {
+        double base = PRICE_HAWAIIAN;
+        if (this.extraSauce)
+            base += EXTRA_SAUCE_FEE;
+        if (this.extraCheese)
+            base += EXTRA_CHEESE_FEE;
+        if (this.size == Size.MEDIUM)
+            base += PRICE_FOR_MEDIUM;
+        if (this.size == Size.LARGE)
+            base += PRICE_FOR_LARGE;
+        return base;
+    }
+}
+/**
+ * GardenFreshPizza class represents a pizza with fresh vegetable toppings.
+ */
+class GardenFreshPizza extends Pizza {
+    /**
+     * Default constructor for a GardenFreshPizza object.
+     */
+    public GardenFreshPizza() {
+        super();
+        pizzaType = "GardenFresh";
+        toppings.add(Topping.ONION);
+        toppings.add(Topping.MUSHROOM);
+        toppings.add(Topping.GREEN_PEPPER);
+        toppings.add(Topping.ONION);
+    }
+
+    /**
+     * Calculate the price of the GardenFreshPizza based on its size and additional options.
+     *
+     * @return The total price of the GardenFreshPizza pizza.
+     */
+    public double price() {
+        double base = PRICE_GARDEN_FRESH;
+        if (this.extraSauce)
+            base += EXTRA_SAUCE_FEE;
+        if (this.extraCheese)
+            base += EXTRA_CHEESE_FEE;
+        if (this.size == Size.MEDIUM)
+            base += PRICE_FOR_MEDIUM;
+        if (this.size == Size.LARGE)
+            base += PRICE_FOR_LARGE;
+        return base;
+    }
+}
+
+/**
+ * ChickenAlfredo class represents a pizza with chicken topping.
+ */
+class ChickenAlfredoPizza extends Pizza {
+
+    /**
+     * Default constructor for a ChickenAlfredo object.
+     */
+    public ChickenAlfredoPizza() {
+        super();
+        pizzaType = "ChickenAlfredo";
+        sauce = Sauce.ALFREDO;
+        toppings.add(Topping.CHICKEN);
+    }
+
+    /**
+     * Calculate the price of the chickenAlfredo pizza based on its size and additional options.
+     *
+     * @return The total price of the chicken alfredo pizza.
+     */
+    public double price() {
+        double base = PRICE_CHICKEN_ALFREDO;
+        if (this.extraSauce)
+            base += EXTRA_SAUCE_FEE;
+        if (this.extraCheese)
+            base += EXTRA_CHEESE_FEE;
+        if (this.size == Size.MEDIUM)
+            base += PRICE_FOR_MEDIUM;
+        if (this.size == Size.LARGE)
+            base += PRICE_FOR_LARGE;
+        return base;
+    }
+}
+/**
+ * GrilledChicken class represents a pizza with chicken topping.
+ */
+class GrilledChickenPizza extends Pizza {
+
+    /**
+     * Default constructor for a GrilledChicken object.
+     */
+    public GrilledChickenPizza() {
+        super();
+        pizzaType = "GrilledChicken";
+        toppings.add(Topping.CHICKEN);
+    }
+
+    /**
+     * Calculate the price of the GrilledChicken pizza based on its size and additional options.
+     *
+     * @return The total price of the GrilledChicken pizza.
+     */
+    public double price() {
+        double base = PRICE_GRILLEDCHICKEN;
+        if (this.extraSauce)
+            base += EXTRA_SAUCE_FEE;
+        if (this.extraCheese)
+            base += EXTRA_CHEESE_FEE;
+        if (this.size == Size.MEDIUM)
+            base += PRICE_FOR_MEDIUM;
+        if (this.size == Size.LARGE)
+            base += PRICE_FOR_LARGE;
+        return base;
+    }
+}
 /**
  * BuildYourOwnPizza class represents a customizable pizza where toppings can be added.
  */
