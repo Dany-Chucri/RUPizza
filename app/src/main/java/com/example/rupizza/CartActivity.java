@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.text.NumberFormat;
 
 public class CartActivity extends AppCompatActivity {
@@ -33,13 +36,12 @@ public class CartActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
         storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
-
-        System.out.println("On cart onCreate: " + shoppingCart.getPizzas());
-
+        //System.out.println("On cart onCreate: " + shoppingCart.getPizzas());
         cartList = findViewById(R.id.cartList);
         orderNumber = findViewById(R.id.textView11);
         subtotal = findViewById(R.id.textView13);
         salesTax = findViewById(R.id.textView15);
+        orderTotal = findViewById(R.id.textView17);
         removePizza = findViewById(R.id.button1);
         placeOrder = findViewById(R.id.button2);
 
@@ -51,17 +53,34 @@ public class CartActivity extends AppCompatActivity {
                 CartActivity.position = position;
             }
         });
-        orderNumber.setText("" + shoppingCart.getOrderNumber());
+        updatePrices();
     }
 
     public void addPizza(Pizza pizza) {
         shoppingCart.addPizza(pizza);
+        ArrayAdapter<Pizza> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shoppingCart.getPizzas());
+        cartList.setAdapter(adapter);
         updatePrices();
     }
 
     public void removePizza(Pizza pizza) {
-        shoppingCart.removePizza(pizza);
-        updatePrices();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("Are you sure you would like whichever pizza you last touched/clicked?").setTitle("Removal Confirmation");
+        alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                shoppingCart.removePizza(pizza);
+                ArrayAdapter<Pizza> adapter = new ArrayAdapter<>(CartActivity.this, android.R.layout.simple_list_item_1, shoppingCart.getPizzas());
+                cartList.setAdapter(adapter);
+                updatePrices();
+                Toast.makeText(getApplicationContext(), "Pizza was removed.", Toast.LENGTH_LONG).show();
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Pizza was not removed.", Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
     }
 
     public void updatePrices() {
@@ -72,12 +91,13 @@ public class CartActivity extends AppCompatActivity {
         double taxAmount = (total * Pizza.SALES_TAX) - total;
         double totalPrice = total+ taxAmount;
 
+        orderNumber.setText("" + shoppingCart.getOrderNumber());
         subtotal.setText(NumberFormat.getCurrencyInstance().format(total));
         salesTax.setText(NumberFormat.getCurrencyInstance().format(taxAmount));
         orderTotal.setText(NumberFormat.getCurrencyInstance().format(totalPrice));
     }
 
-    private void handleRemovePizza() {
+    public void handleRemovePizza(View view) {
         try {
             Pizza selectedPizza = (Pizza) cartList.getAdapter().getItem(position);
             removePizza(selectedPizza);
@@ -91,7 +111,7 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    private void handlePlaceOrder() {
+    public void handlePlaceOrder(View view) {
         try {
             Order newOrder = new Order();
             newOrder.copyOrder(shoppingCart);
@@ -102,6 +122,7 @@ public class CartActivity extends AppCompatActivity {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Order Info");
             alert.setMessage("Order Placed!\nThe store has received your order.");
+            alert.setPositiveButton("OK", null);
             alert.show();
             clearCart();
 
@@ -110,6 +131,7 @@ public class CartActivity extends AppCompatActivity {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Purchase error");
             alert.setMessage("Could not place order.\nPlease try again after checking your information.");
+            alert.setPositiveButton("OK", null);
             alert.show();
         }
     }

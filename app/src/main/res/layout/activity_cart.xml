@@ -39,6 +39,9 @@
         android:layout_width="fill_parent"
         android:layout_height="541dp"
         android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:longClickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -58,17 +61,17 @@
 
     <EditText
         android:id="@+id/textView13"
-        android:layout_width="48dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginBottom="104dp"
+        android:autofillHints="SubTotal"
+        android:hint="@string/subtotal"
+        android:inputType="none"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.081"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        android:inputType="none"
-        android:hint="@string/subtotal"
-        android:autofillHints="SubTotal"/>
+        app:layout_constraintStart_toEndOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView14"
@@ -85,7 +88,7 @@
 
     <EditText
         android:id="@+id/textView15"
-        android:layout_width="48dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:autofillHints="Sales Tax"
@@ -114,17 +117,17 @@
 
     <EditText
         android:id="@+id/textView17"
-        android:layout_width="48dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
+        android:autofillHints="Order Total"
+        android:hint="@string/order_total"
+        android:inputType="none"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.004"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
-        android:inputType="none"
-        android:hint="@string/order_total"
-        android:autofillHints="Order Total"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
         android:id="@+id/button1"
