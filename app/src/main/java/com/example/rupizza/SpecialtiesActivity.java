@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class SpecialtiesActivity extends AppCompatActivity {
     protected Order shoppingCart;
+    protected StoreOrders storeOrders;
     private ArrayList<Item> itemsList;
     private RecyclerView recyclerView;
 
@@ -38,6 +39,7 @@ public class SpecialtiesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
+        storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
         //System.out.println("On specialties onCreate: " + shoppingCart.getPizzas());
 
         setContentView(R.layout.activity_specialties_view);

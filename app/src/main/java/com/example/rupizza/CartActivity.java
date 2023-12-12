@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,11 +33,6 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
-        storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
-        //System.out.println("On cart onCreate: " + shoppingCart.getPizzas());
         cartList = findViewById(R.id.cartList);
         orderNumber = findViewById(R.id.textView11);
         subtotal = findViewById(R.id.textView13);
@@ -44,6 +40,12 @@ public class CartActivity extends AppCompatActivity {
         orderTotal = findViewById(R.id.textView17);
         removePizza = findViewById(R.id.button1);
         placeOrder = findViewById(R.id.button2);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
+        storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
+        if (shoppingCart.getOrderNumber() < storeOrders.getNextAvailableOrderNum()) clearCart();
 
         ArrayAdapter<Pizza> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shoppingCart.getPizzas());
         cartList.setAdapter(adapter);
@@ -54,6 +56,17 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         updatePrices();
+    }
+
+    private void sendResult() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Store Orders", storeOrders);
+        //System.out.println("On send result: " + storeOrders.getNextAvailableOrderNum());
+        intent.putExtras(bundle);
+        clearCart();
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     public void addPizza(Pizza pizza) {
@@ -115,17 +128,7 @@ public class CartActivity extends AppCompatActivity {
         try {
             Order newOrder = new Order();
             newOrder.copyOrder(shoppingCart);
-            //TODO : adding the order itself to the store orders, i.e., storeOrdersController.addCartOrder(newOrder);
-
-            shoppingCart.setOrderNumber(storeOrders.getNextAvailableOrderNum());
-
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Order Info");
-            alert.setMessage("Order Placed!\nThe store has received your order.");
-            alert.setPositiveButton("OK", null);
-            alert.show();
-            clearCart();
-
+            addCartOrder(newOrder);
         }
         catch (Exception e){
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -136,11 +139,33 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
+    public void addCartOrder(Order newOrder) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("Would you like to place the order?").setTitle("Checkout Confirmation");
+        alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                storeOrders.addOrder(newOrder);
+                storeOrders.nextOrder();
+                shoppingCart.setOrderNumber(storeOrders.getNextAvailableOrderNum());
+                Toast.makeText(getApplicationContext(), "Order has been placed", Toast.LENGTH_LONG).show();
+                clearCart();
+                sendResult();
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Order was not placed.", Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+    }
+
     private void clearCart(){
         for (Pizza pizza : shoppingCart.getPizzas()) {
             shoppingCart.removePizza(pizza);
         }
         updatePrices();
-        orderNumber.setText(shoppingCart.getOrderNumber());
+        shoppingCart.setOrderNumber(storeOrders.getNextAvailableOrderNum());
+        orderNumber.setText("" + shoppingCart.getOrderNumber());
     }
 }

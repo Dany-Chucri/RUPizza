@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Bundle bundle = data.getExtras();
                 assert bundle != null;
-                shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
-                ///System.out.println("On activity result: " + shoppingCart.getPizzas());
+                if(bundle.getSerializable("Shopping Cart") != null) shoppingCart = (Order) bundle.getSerializable("Shopping Cart");
+                if(bundle.getSerializable("Store Orders") != null) storeOrders = (StoreOrders) bundle.getSerializable("Store Orders");
+                //System.out.println("On activity result: " + storeOrders.getNextAvailableOrderNum());
             }
         }
     }
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, SpecialtiesActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("Shopping Cart", shoppingCart);
+        bundle.putSerializable("Store Orders", storeOrders);
         intent.putExtras(bundle);
         //System.out.println("On openSpecialties: " + shoppingCart.getPizzas());
         startActivityForResult(intent, 1);
@@ -54,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, CustomsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("Shopping Cart", shoppingCart);
+        bundle.putSerializable("Store Orders", storeOrders);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public void openCart (View view){
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putSerializable("Store Orders", storeOrders);
         intent.putExtras(bundle);
         //System.out.println("On openCart: " + shoppingCart.getPizzas());
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public void openOrders (View view){
@@ -74,6 +77,6 @@ public class MainActivity extends AppCompatActivity {
         bundle.putSerializable("Shopping Cart", shoppingCart);
         bundle.putSerializable("Store Orders", storeOrders);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 }
