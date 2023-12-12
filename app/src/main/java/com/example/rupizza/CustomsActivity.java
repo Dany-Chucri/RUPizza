@@ -164,7 +164,7 @@ public class CustomsActivity extends AppCompatActivity {
 
     public void deselectTopping(View view) {
         if (selectedToppingsList.size() <= 3){
-            Toast.makeText(getApplicationContext(), "You cannot have less than 7 toppings", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You cannot have less than 3 toppings", Toast.LENGTH_LONG).show();
             return;
         }
         Topping topping = (Topping) selectedToppings.getAdapter().getItem(positionRemove);
