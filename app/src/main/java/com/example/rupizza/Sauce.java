@@ -1,10 +1,12 @@
 package com.example.rupizza;
 
+import java.io.Serializable;
+
 /**
  * The Sauce enum represents different types of pizza sauces.
  * @author Dany Chucri, Madhur Nutulapati
  */
-public enum Sauce {
+public enum Sauce implements Serializable {
     /**
      * Represents a tomato-based pizza sauce.
      */

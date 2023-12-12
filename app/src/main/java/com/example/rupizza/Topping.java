@@ -1,10 +1,12 @@
 package com.example.rupizza;
 
+import java.io.Serializable;
+
 /**
  * The Topping enum represents different toppings for pizza.
  * @author Dany Chucri, Madhur Nutulapati
  */
-public enum Topping {
+public enum Topping implements Serializable {
     SAUSAGE("Sausage"),
     PEPPERONI("Pepperoni"),
     GREEN_PEPPER("Green Pepper"),

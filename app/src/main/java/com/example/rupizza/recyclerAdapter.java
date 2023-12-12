@@ -39,7 +39,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             pizzaImage = view.findViewById(R.id.pizzaImage);
             toppingsList = view.findViewById(R.id.toppingsList);
         }
-
     }
 
     @NonNull

@@ -1,4 +1,5 @@
 package com.example.rupizza;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -6,7 +7,7 @@ import java.util.ArrayList;
  * Abstract class representing a pizza.
  * @author Dany Chucri, Madhur Nutulapati
  */
-public abstract class Pizza {
+public abstract class Pizza implements Serializable {
     protected ArrayList<Topping> toppings; //Topping is an enum class
 
     protected Size size; //Size is an enum class
